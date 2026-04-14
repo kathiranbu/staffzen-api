@@ -64,11 +64,8 @@ catch (Exception ex)
     startupLog.LogError(ex, "Could not create wwwroot/uploads — selfie photos will not be saved. Path: {Path}", uploadsPath);
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseStaticFiles();
 app.UseHttpsRedirection();
