@@ -1,0 +1,6 @@
+@APM.StaffZen.API_HostAddress = http://localhost:5080
+
+GET {{APM.StaffZen.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
