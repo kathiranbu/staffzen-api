@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("APM.StaffZen.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d53bc4c7632b3cee2c093cc973bff4685296b719")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2cbac32f1ab2cf7bbb318da72c3b7988e8154cf4")]
 [assembly: System.Reflection.AssemblyProductAttribute("APM.StaffZen.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("APM.StaffZen.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
