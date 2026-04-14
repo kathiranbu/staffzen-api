@@ -1,0 +1,45 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\AttendanceLocation\\APM.StaffZen.API\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CF869131-5C88-978A-0A11-682AEBB8D0E1}|APM.StaffZen.API.csproj|f:\\attendancelocation\\apm.staffzen.api\\apm.staffzen.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{CF869131-5C88-978A-0A11-682AEBB8D0E1}|APM.StaffZen.API.csproj|solutionrelative:apm.staffzen.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "APM.StaffZen.API",
+              "DocumentMoniker": "F:\\AttendanceLocation\\APM.StaffZen.API\\APM.StaffZen.API.csproj",
+              "RelativeDocumentMoniker": "APM.StaffZen.API.csproj",
+              "ToolTip": "F:\\AttendanceLocation\\APM.StaffZen.API\\APM.StaffZen.API.csproj",
+              "RelativeToolTip": "APM.StaffZen.API.csproj",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-14T11:01:54.441Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
