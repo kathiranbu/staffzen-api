@@ -3,25 +3,23 @@ using APM.StaffZen.API.Data;
 using APM.StaffZen.API.Models;
 using APM.StaffZen.API.Services;
 
-
+// Fix DateTime issue with PostgreSQL (temporary safe fix)
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-// All schema changes are handled by EF Core migrations (Migrations/ folder).
-// No manual SQL needed. Just run the app — db.Database.Migrate() runs on startup.
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// ✅ FIXED DbContext (clean and correct)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-// AFTER
-options.UseNpgsql(
-    builder.Configuration.GetConnectionString("DefaultConnection"),
-    o => o.UseNodaTime()
-).UseSnakeCaseNamingConvention();
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
-
+// Email + Services
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<PasswordService>();
@@ -29,38 +27,35 @@ builder.Services.AddScoped<FirebaseService>();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 
-// Background service: purges GPS location points older than 90 days
+// Background services
 builder.Services.AddHostedService<LocationCleanupService>();
-
-// Background service: automatically clocks out all open sessions at the configured time
 builder.Services.AddHostedService<AutoClockOutService>();
 
-var blazorOrigin = "https://staffzen-app.onrender.com"; 
+// CORS
+var blazorOrigin = "https://staffzen-app.onrender.com";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("BlazorPolicy", policy =>
-        // AllowAnyOrigin lets the mobile phone (on your LAN) reach the API.
-        // In production, replace with your real domain using .WithOrigins("https://yourdomain.com")
         policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 });
 
 var app = builder.Build();
 
-// Auto-migrate on startup — all schema changes live in Migrations/.
+// Auto-migrate database
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var log = scope.ServiceProvider.GetRequiredService<ILogger<ApplicationDbContext>>();
 
-    // Apply any pending migrations (idempotent).
     db.Database.Migrate();
 }
-    // Safety net: if the LeaveRequests migration was previously recorded as applied
-    // via raw SQL but the table was never actually created, create it now.
-  
-// ── Auto-create wwwroot/uploads so selfie photos always have a place to land ──
-// This runs every startup — Directory.CreateDirectory is a no-op if it already exists.
-var uploadsPath = Path.Combine(app.Environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "uploads");
+
+// Ensure uploads folder exists
+var uploadsPath = Path.Combine(
+    app.Environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"),
+    "uploads"
+);
+
 try
 {
     Directory.CreateDirectory(uploadsPath);
@@ -68,9 +63,10 @@ try
 catch (Exception ex)
 {
     var startupLog = app.Services.GetRequiredService<ILogger<Program>>();
-    startupLog.LogError(ex, "Could not create wwwroot/uploads — selfie photos will not be saved. Path: {Path}", uploadsPath);
+    startupLog.LogError(ex, "Could not create wwwroot/uploads. Path: {Path}", uploadsPath);
 }
 
+// Middleware
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -78,6 +74,7 @@ app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseCors("BlazorPolicy");
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
