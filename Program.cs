@@ -28,7 +28,7 @@ builder.Services.AddHostedService<LocationCleanupService>();
 // Background service: automatically clocks out all open sessions at the configured time
 builder.Services.AddHostedService<AutoClockOutService>();
 
-var blazorOrigin = builder.Configuration["AppSettings:BlazorBaseUrl"] ?? "https://localhost:7299";
+var blazorOrigin = "https://staffzen-app.onrender.com"; 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("BlazorPolicy", policy =>
