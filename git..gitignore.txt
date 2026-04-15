@@ -1,8 +1,0 @@
-# Ignore secret files
-appsettings.json
-*.json
-apm-staffzen-*.json
-
-# Ignore build files
-bin/
-obj/
