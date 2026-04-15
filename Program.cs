@@ -3,6 +3,8 @@ using APM.StaffZen.API.Data;
 using APM.StaffZen.API.Models;
 using APM.StaffZen.API.Services;
 
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // All schema changes are handled by EF Core migrations (Migrations/ folder).
 // No manual SQL needed. Just run the app — db.Database.Migrate() runs on startup.
 
@@ -13,7 +15,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// AFTER
+options.UseNpgsql(
+    builder.Configuration.GetConnectionString("DefaultConnection"),
+    o => o.UseNodaTime()
+).UseSnakeCaseNamingConvention();
+
 
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped<EmailService>();
